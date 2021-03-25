@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ChangeEvent, Component, FC } from "react";
 import { Card } from "./Card";
 import { Row } from "./Row";
 
@@ -6,14 +6,34 @@ interface Props {
   name?: string;
 }
 
-export const Greeting: FC<Props> = ({ name = "Vision" }) => {
-  return (
-    <Card>
-      <Row label="name">
-        <p>{name}</p>
-      </Row>
-    </Card>
-  );
-};
+export class Greeting extends Component {
+  state = {
+    name: "Tony",
+    surname: "Stark",
+  };
+
+  handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({ name: event.target.value });
+  };
+
+  handleSurnameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({ surname: event.target.value });
+  };
+
+  render() {
+    const { name, surname } = this.state;
+
+    return (
+      <Card desc="Classes">
+        <Row label="name">
+          <input value={name} onChange={this.handleNameChange} />
+        </Row>
+        <Row label="surname">
+          <input value={surname} onChange={this.handleSurnameChange} />
+        </Row>
+      </Card>
+    );
+  }
+}
 
 export default Greeting;

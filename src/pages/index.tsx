@@ -7,7 +7,7 @@ const hooks = () => {
   return (
     <div className={styles.container}>
       <Greeting />
-      {/* <GreetingHooks /> */}
+      <GreetingHooks />
     </div>
   );
 };
