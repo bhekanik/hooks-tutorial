@@ -2,10 +2,6 @@ import { ChangeEvent, Component, FC } from "react";
 import { Card } from "./Card";
 import { Row } from "./Row";
 
-interface Props {
-  name?: string;
-}
-
 export class Greeting extends Component {
   state = {
     name: "Tony",

@@ -2,10 +2,6 @@ import { ChangeEvent, FC, useState } from "react";
 import { Card } from "./Card";
 import { Row } from "./Row";
 
-interface Props {
-  name?: string;
-}
-
 export const Greeting: FC = () => {
   const [name, setName] = useState<string>("Steve");
   const [surname, setSurname] = useState<string>("Roger");
