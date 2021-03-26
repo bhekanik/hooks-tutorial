@@ -1,5 +1,7 @@
 import { ChangeEvent, FC, useState, useContext, useEffect } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { useAppTitle } from "../hooks/useAppTitle";
+import { useWindowWidth } from "../hooks/useWindowWidth";
 import { Card } from "./Card";
 import { Row } from "./Row";
 
@@ -11,21 +13,8 @@ export const Greeting: FC<Props> = ({ setTitle }) => {
   const [name, setName] = useState<string>("Steve");
   const [surname, setSurname] = useState<string>("Rogers");
   const { theme } = useContext(ThemeContext);
-
-  useEffect(() => {
-    setTitle(`${name} ${surname}`);
-  }, [name, surname]);
-
-  const [width, setWidth] = useState<number>(0);
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    setWidth(window.innerWidth);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  useAppTitle(`${name} ${surname}`, setTitle);
+  const width = useWindowWidth();
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
