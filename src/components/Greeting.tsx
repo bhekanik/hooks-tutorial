@@ -11,7 +11,7 @@ export class Greeting extends Component<Props> {
   state = {
     name: "Tony",
     surname: "Stark",
-    width: window.innerWidth,
+    width: 0,
   };
 
   handleResize = () => this.setState({ width: window.innerWidth });
@@ -20,6 +20,7 @@ export class Greeting extends Component<Props> {
     const { setTitle } = this.props;
     const { name, surname } = this.state;
     setTitle(`${name} ${surname}`);
+    this.setState({ width: window.innerWidth });
 
     window.addEventListener("resize", this.handleResize);
   }

@@ -10,16 +10,17 @@ interface Props {
 export const Greeting: FC<Props> = ({ setTitle }) => {
   const [name, setName] = useState<string>("Steve");
   const [surname, setSurname] = useState<string>("Rogers");
-  const [width, setWidth] = useState<number>(window.innerWidth);
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     setTitle(`${name} ${surname}`);
   }, [name, surname]);
 
+  const [width, setWidth] = useState<number>(0);
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
+    setWidth(window.innerWidth);
 
     return () => {
       window.removeEventListener("resize", handleResize);
