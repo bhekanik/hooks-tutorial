@@ -1,6 +1,7 @@
 import { ChangeEvent, Component, FC } from "react";
 import { Card } from "./Card";
 import { Row } from "./Row";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export class Greeting extends Component {
   state = {
@@ -20,14 +21,18 @@ export class Greeting extends Component {
     const { name, surname } = this.state;
 
     return (
-      <Card desc="Classes">
-        <Row label="name">
-          <input value={name} onChange={this.handleNameChange} />
-        </Row>
-        <Row label="surname">
-          <input value={surname} onChange={this.handleSurnameChange} />
-        </Row>
-      </Card>
+      <ThemeContext.Consumer>
+        {({ theme }) => (
+          <Card desc="Classes" theme={theme}>
+            <Row label="name">
+              <input value={name} onChange={this.handleNameChange} />
+            </Row>
+            <Row label="surname">
+              <input value={surname} onChange={this.handleSurnameChange} />
+            </Row>
+          </Card>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
