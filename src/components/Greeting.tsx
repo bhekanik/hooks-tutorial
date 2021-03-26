@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, FC } from "react";
+import { ChangeEvent, Component } from "react";
 import { Card } from "./Card";
 import { Row } from "./Row";
 import { ThemeContext } from "../contexts/ThemeContext";
@@ -11,7 +11,28 @@ export class Greeting extends Component<Props> {
   state = {
     name: "Tony",
     surname: "Stark",
+    width: window.innerWidth,
   };
+
+  handleResize = () => this.setState({ width: window.innerWidth });
+
+  componentDidMount() {
+    const { setTitle } = this.props;
+    const { name, surname } = this.state;
+    setTitle(`${name} ${surname}`);
+
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentDidUpdate() {
+    const { setTitle } = this.props;
+    const { name, surname } = this.state;
+    setTitle(`${name} ${surname}`);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
 
   handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ name: event.target.value });
@@ -22,7 +43,7 @@ export class Greeting extends Component<Props> {
   };
 
   render() {
-    const { name, surname } = this.state;
+    const { name, surname, width } = this.state;
 
     return (
       <ThemeContext.Consumer>
@@ -34,6 +55,7 @@ export class Greeting extends Component<Props> {
             <Row label="surname">
               <input value={surname} onChange={this.handleSurnameChange} />
             </Row>
+            <Row label="width">{width}</Row>
           </Card>
         )}
       </ThemeContext.Consumer>
