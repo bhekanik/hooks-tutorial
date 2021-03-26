@@ -3,7 +3,11 @@ import { Card } from "./Card";
 import { Row } from "./Row";
 import { ThemeContext } from "../contexts/ThemeContext";
 
-export class Greeting extends Component {
+interface Props {
+  setTitle: (newTitle: string) => void;
+}
+
+export class Greeting extends Component<Props> {
   state = {
     name: "Tony",
     surname: "Stark",

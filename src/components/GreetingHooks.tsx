@@ -3,7 +3,11 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { Card } from "./Card";
 import { Row } from "./Row";
 
-export const Greeting: FC = () => {
+interface Props {
+  setTitle: (newTitle: string) => void;
+}
+
+export const Greeting: FC<Props> = () => {
   const [name, setName] = useState<string>("Steve");
   const [surname, setSurname] = useState<string>("Roger");
   const { theme } = useContext(ThemeContext);
