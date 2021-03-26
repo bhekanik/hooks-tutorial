@@ -9,19 +9,16 @@ interface Props {
 export class DocumentTitle extends Component<Props> {
   componentDidMount() {
     const { title, setTitle } = this.props;
-
     setTitle(title);
   }
 
   componentDidUpdate() {
     const { title, setTitle } = this.props;
-
     setTitle(title);
   }
 
   render() {
     const { render } = this.props;
-
     return render();
   }
 }

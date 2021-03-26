@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState, useContext, useEffect } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
 import { useAppTitle } from "../hooks/useAppTitle";
+import { useTheme } from "../hooks/useTheme";
 import { useWindowWidth } from "../hooks/useWindowWidth";
 import { Card } from "./Card";
 import { Row } from "./Row";
@@ -12,7 +12,7 @@ interface Props {
 export const Greeting: FC<Props> = ({ setTitle }) => {
   const [name, setName] = useState<string>("Steve");
   const [surname, setSurname] = useState<string>("Rogers");
-  const { theme } = useContext(ThemeContext);
+  const [ThemeToggle, theme] = useTheme();
   useAppTitle(`${name} ${surname}`, setTitle);
   const width = useWindowWidth();
 
@@ -25,15 +25,18 @@ export const Greeting: FC<Props> = ({ setTitle }) => {
   };
 
   return (
-    <Card desc="Hooks" theme={theme}>
-      <Row label="name">
-        <input value={name} onChange={handleNameChange} />
-      </Row>
-      <Row label="surname">
-        <input value={surname} onChange={handleSurnameChange} />
-      </Row>
-      <Row label="width">{width}</Row>
-    </Card>
+    <>
+      <ThemeToggle />
+      <Card desc="Hooks" theme={theme}>
+        <Row label="name">
+          <input value={name} onChange={handleNameChange} />
+        </Row>
+        <Row label="surname">
+          <input value={surname} onChange={handleSurnameChange} />
+        </Row>
+        <Row label="width">{width}</Row>
+      </Card>
+    </>
   );
 };
 
