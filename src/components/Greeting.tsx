@@ -1,39 +1,21 @@
-import { ChangeEvent, Component } from "react";
+import React, { ChangeEvent, Component } from "react";
 import { Card } from "./Card";
 import { Row } from "./Row";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { DocumentTitle } from "../renderProps/DocumentTitle";
+import { withWindowWidth, WithWindowWidthProps } from "../hoc/withWindowWidth";
 
-interface Props {
+interface OwnProps {
   setTitle: (newTitle: string) => void;
 }
+
+type Props = OwnProps & WithWindowWidthProps;
 
 export class Greeting extends Component<Props> {
   state = {
     name: "Tony",
     surname: "Stark",
-    width: 0,
   };
-
-  handleResize = () => this.setState({ width: window.innerWidth });
-
-  componentDidMount() {
-    const { setTitle } = this.props;
-    const { name, surname } = this.state;
-    setTitle(`${name} ${surname}`);
-    this.setState({ width: window.innerWidth });
-
-    window.addEventListener("resize", this.handleResize);
-  }
-
-  componentDidUpdate() {
-    const { setTitle } = this.props;
-    const { name, surname } = this.state;
-    setTitle(`${name} ${surname}`);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize);
-  }
 
   handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ name: event.target.value });
@@ -44,24 +26,31 @@ export class Greeting extends Component<Props> {
   };
 
   render() {
-    const { name, surname, width } = this.state;
+    const { name, surname } = this.state;
+    const { setTitle, width } = this.props;
 
     return (
-      <ThemeContext.Consumer>
-        {({ theme }) => (
-          <Card desc="Classes" theme={theme}>
-            <Row label="name">
-              <input value={name} onChange={this.handleNameChange} />
-            </Row>
-            <Row label="surname">
-              <input value={surname} onChange={this.handleSurnameChange} />
-            </Row>
-            <Row label="width">{width}</Row>
-          </Card>
+      <DocumentTitle
+        title={`${name} ${surname}`}
+        setTitle={setTitle}
+        render={() => (
+          <ThemeContext.Consumer>
+            {({ theme }) => (
+              <Card desc="Classes" theme={theme}>
+                <Row label="name">
+                  <input value={name} onChange={this.handleNameChange} />
+                </Row>
+                <Row label="surname">
+                  <input value={surname} onChange={this.handleSurnameChange} />
+                </Row>
+                <Row label="width">{width}</Row>
+              </Card>
+            )}
+          </ThemeContext.Consumer>
         )}
-      </ThemeContext.Consumer>
+      />
     );
   }
 }
 
-export default Greeting;
+export default withWindowWidth(Greeting);
